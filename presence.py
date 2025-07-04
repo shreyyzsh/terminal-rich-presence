@@ -11,6 +11,11 @@ def checkTerminalStatus():
             return True
     return False
 
+def checkDiscordStatus():
+    for proc in psutil.process_iter(['name']):
+        if proc.info['name'] == 'Discord':
+            return True
+    return False
 
 timeOfStart = time.time()
 
@@ -27,12 +32,18 @@ while checkTerminalStatus():
             large_text=None,
             details="Running zsh"
         )
-        #print("Connected Successfully.")
+        
         time.sleep(30)
     
     except:
-        print("Connection Failed.")
-        pass
+        if not checkDiscordStatus():
+            print('Discord Not Detected. Restart iTerm2 after opening discord.')
+        else:
+            print('Connection Failed.')
+        
+        break
+            
+        
     
     
         
